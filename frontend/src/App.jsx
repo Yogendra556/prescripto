@@ -10,6 +10,8 @@ import MyAppointments from './pages/MyAppointments'
 import Appointment from './pages/Appointment'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { ToastContainer,toast } from 'react-toastify'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +20,7 @@ function App() {
     <>
     <div className='mx-4 sm:mx-[10%]'>
       <Navbar/>
+      <ToastContainer/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/doctors' element={<Doctors/>}/>

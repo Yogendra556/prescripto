@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import {assets} from '../assets/assets'
 import {NavLink, useNavigate} from 'react-router-dom'
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
 
     const Navigate = useNavigate();
+    const {token,setToken,userData} = useContext(AppContext)
     const [showMenu, setShowMenu] = useState(false)
-    const [token, setToken] = useState(true)
+     
+    const logoutHandler = async()=>{
+        setToken('')
+        localStorage.removeItem('token')
+    }
 
     return (
     <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400'>
@@ -32,15 +39,14 @@ const Navbar = () => {
         </ul>
         <div className='flex items-center gap-4 '>
             {
-                token?<div className='flex items-center gap-2 cursor-pointer group relative'>
-                    <img className='w-8 rounded-full' src={assets.profile_pic}/>
+                token && userData ?<div className='flex items-center gap-2 cursor-pointer group relative'>
+                    <img className='w-8 rounded-full' src={userData.img}/>
                     <img className='w-2.5' src={assets.dropdown_icon}/>
                 <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600z-20 hidden group-hover:block'>
                     <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4 text-gray-500'>
                         <p onClick={()=>{Navigate('/my-profile')}} className='hover:text-black cursor-pointer'>My Profile</p>
                         <p onClick={()=>{Navigate('/my-appointments')}} className='hover:text-black cursor-pointer'>My Appointments</p>
-                        <p className='hover:text-black cursor-pointer'>Logout</p>
-                        <p><button onClick={()=>{Navigate('/login')}} className='cursor-pointer rounded-xl bg-[#5f6fff]'>LOGIN</button></p>
+                        <p onClick={()=>{logoutHandler()}} className='hover:text-black cursor-pointer'>Logout</p>
                     </div>
                 </div>
                 </div>
